@@ -4,7 +4,7 @@ import Gnb from './Gnb';
 
 const meta: Meta<typeof Gnb> = {
     component: Gnb,
-    title: 'Gnb',
+    title: 'molecules/Gnb',
     tags: ['autodocs'],
     argTypes: {}
 };
