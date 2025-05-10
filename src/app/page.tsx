@@ -1,3 +1,3 @@
 export default function Home() {
-    <>gdgd</>;
+    return <div>ㅎㅇ</div>;
 }
