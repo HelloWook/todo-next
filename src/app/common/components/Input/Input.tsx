@@ -7,7 +7,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input = ({ className, ...rest }: InputProps) => {
     return (
-        <div className="relative w-full max-w-[1000px] ">
+        <div className="relative w-full">
             <div className="absolute w-full h-[56px] px-6 py-[19px]  bg-slate-900 text-slate-900 rounded-3xl border-2 border-slate-900 translate-1" />
             <input
                 className={clsx(

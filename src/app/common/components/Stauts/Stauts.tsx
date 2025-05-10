@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 import React from 'react';
-import { SubHeading } from '../Text/Text';
+import { TextBold } from '../Text/Text';
 
 interface StautsProps {
-    isDone: boolean;
+    isDone?: boolean;
 }
 
 const StautsStlye = Object.freeze({
@@ -11,7 +11,7 @@ const StautsStlye = Object.freeze({
     todo: 'text-green-700 bg-lime-300 '
 });
 
-const Stauts = ({ isDone }: StautsProps) => {
+const Stauts = ({ isDone = false }: StautsProps) => {
     const StautsColor = isDone ? StautsStlye.complete : StautsStlye.todo;
     const StatusContent = isDone ? 'DONE' : 'TO DO';
 
@@ -22,7 +22,7 @@ const Stauts = ({ isDone }: StautsProps) => {
                 StautsColor
             )}
         >
-            <SubHeading>{StatusContent}</SubHeading>
+            <TextBold>{StatusContent}</TextBold>
         </div>
     );
 };

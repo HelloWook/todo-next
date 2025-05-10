@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Heading, Text } from '../Text/Text';
 import clsx from 'clsx';
 import Image from 'next/image';
 
 interface CheckListProps {
-    isDone: boolean;
+    isDone?: boolean;
+    children: ReactNode;
 }
 
+type CircleProps = Pick<CheckListProps, 'isDone'>;
+
 const commonStlye =
-    ' bg- rounded-3xl border-2 border-slate-900 flex items-center';
+    ' bg- rounded-3xl border-2 border-slate-900 flex items-center w-full cursor-pointer';
 
 const CircleBackGroundStlye = Object.freeze({
     complete: 'bg-violet-600',
@@ -21,7 +24,7 @@ const CheckBackGroundListStlye = Object.freeze({
 });
 
 // 원 컴포넌트
-const Circle = ({ isDone }: CheckListProps) => {
+const Circle = ({ isDone = false }: CircleProps) => {
     const backgroundColor = isDone
         ? CircleBackGroundStlye.complete
         : CircleBackGroundStlye.default;
@@ -46,7 +49,7 @@ const Circle = ({ isDone }: CheckListProps) => {
     );
 };
 
-export const CheckList = ({ isDone }: CheckListProps) => {
+export const CheckList = ({ isDone = false, children }: CheckListProps) => {
     const backgroundColor = isDone
         ? CheckBackGroundListStlye.complete
         : CheckBackGroundListStlye.default;
@@ -54,18 +57,18 @@ export const CheckList = ({ isDone }: CheckListProps) => {
     return (
         <div
             className={clsx(
-                'w-[520px] h-[41px]  py-[9px] pl-[14px] ',
+                'max-w-[588px] h-[50px] pl-[14px] ',
                 commonStlye,
                 backgroundColor
             )}
         >
             <Circle isDone={isDone} />
-            <Text className={isDone ? 'line-through' : ''}>{'안녕'}</Text>
+            <Text className={isDone ? 'line-through' : ''}>{children}</Text>
         </div>
     );
 };
 
-export const DetailCheckList = ({ isDone }: CheckListProps) => {
+export const DetailCheckList = ({ isDone, children }: CheckListProps) => {
     const backgroundColor = isDone
         ? CheckBackGroundListStlye.complete
         : CheckBackGroundListStlye.default;
@@ -79,7 +82,7 @@ export const DetailCheckList = ({ isDone }: CheckListProps) => {
             )}
         >
             <Circle isDone={isDone} />
-            <Heading className={isDone ? 'underline' : ''}>{'안녕'}</Heading>
+            <Heading className={isDone ? 'underline' : ''}>{children}</Heading>
         </div>
     );
 };
