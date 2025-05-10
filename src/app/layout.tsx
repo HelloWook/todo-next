@@ -1,3 +1,4 @@
+import Gnb from './common/components/Gnb/Gnb';
 import './globals.css';
 import localFont from 'next/font/local';
 
@@ -13,7 +14,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className={myFont.className}>
-            <body className="bg-gray-50">{children}</body>
+            <body className="bg-gray-50">
+                <Gnb />
+                {children}
+            </body>
         </html>
     );
 }

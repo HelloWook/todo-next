@@ -9,14 +9,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const ButtonStyle = Object.freeze({
-    primary: ' bg-violet-600 text-white ',
+    primary: ' bg-violet-600 text-black ',
     secondary: ' bg-slate-200 text-slate-900 ',
     delete: ' bg-rose-500 text-white ',
     success: ' bg-lime-300 text-slate-900 '
 });
 
 const commonButtonStyle =
-    'relative w-[148px] h-[56px]   rounded-3xl border-2 border-slate-900';
+    'relative w-full h-[56px] rounded-3xl border-2 border-slate-900 flex justify-center ';
 
 export const Button = ({
     variant = 'primary',
@@ -25,10 +25,11 @@ export const Button = ({
     ...rest
 }: ButtonProps) => {
     return (
-        <>
-            <div className="absolute w-[148px] h-[56px]  bg-slate-900 text-slate-900 rounded-3xl border-2 border-slate-900 translate-1" />
+        <div className="relative max-w-[168px] w-full ">
+            <div className="absolute w-full h-full bg-slate-900 text-slate-900 rounded-3xl border-2 border-slate-900 translate-1 " />
             <button
                 className={clsx(
+                    'flex justify-center items-center  w-full cursor-pointer',
                     commonButtonStyle,
                     ButtonStyle[variant],
                     className
@@ -37,6 +38,6 @@ export const Button = ({
             >
                 <Text>{children}</Text>
             </button>
-        </>
+        </div>
     );
 };
