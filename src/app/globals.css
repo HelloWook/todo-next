@@ -27,4 +27,39 @@
 
     /* 앰버 색상 */
     --color-amber-800: #92400e;
+
+    /* 폰트 크기 커스텀 정의 */
+    --fontSize-nm-20: 20px;
+    --fontSize-nm-18: 18px;
+    --fontSize-nm-16: 16px;
+
+    /* 폰트 웨이트 */
+    --fontWeight-regular: 400;
+    --fontWeight-bold: 700;
+}
+
+@layer utilities {
+    .text-nm-20-bold {
+        font-size: var(--fontSize-nm-20);
+        font-weight: var(--fontWeight-bold);
+        font-family: var(--font-sans);
+    }
+
+    .text-nm-18-bold {
+        font-size: var(--fontSize-nm-18);
+        font-weight: var(--fontWeight-bold);
+        font-family: var(--font-sans);
+    }
+
+    .text-nm-16-bold {
+        font-size: var(--fontSize-nm-16);
+        font-weight: var(--fontWeight-bold);
+        font-family: var(--font-sans);
+    }
+
+    .text-nm-16-regular {
+        font-size: var(--fontSize-nm-16);
+        font-weight: var(--fontWeight-regular);
+        font-family: var(--font-sans);
+    }
 }

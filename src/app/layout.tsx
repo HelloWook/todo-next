@@ -2,7 +2,8 @@ import './globals.css';
 import localFont from 'next/font/local';
 
 const myFont = localFont({
-    src: '../fonts/NanumSquareL.otf'
+    src: '../fonts/NanumSquareL.otf',
+    display: 'swap'
 });
 
 export default function RootLayout({
