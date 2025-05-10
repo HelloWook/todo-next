@@ -3,7 +3,7 @@ import { Text, TextBold, SubHeading, Heading, LargeHeading } from './Text';
 
 // Text 컴포넌트에 대한 메타데이터
 const meta = {
-    title: 'Typography/Text',
+    title: 'atoms/Text',
     tags: ['autodocs'],
     parameters: {
         layout: 'centered'
