@@ -15,15 +15,15 @@ const ButtonStyle = Object.freeze({
     success: ' bg-lime-300 text-slate-900 '
 });
 
+const commonButtonStyle =
+    'relative w-[148px] h-[56px]   rounded-3xl border-2 border-slate-900';
+
 export const Button = ({
     variant = 'primary',
     className,
     children,
     ...rest
 }: ButtonProps) => {
-    const commonButtonStyle =
-        'relative w-[148px] h-[56px]   rounded-3xl border-2 border-slate-900';
-
     return (
         <>
             <div className="absolute w-[148px] h-[56px]  bg-slate-900 text-slate-900 rounded-3xl border-2 border-slate-900 translate-1" />
