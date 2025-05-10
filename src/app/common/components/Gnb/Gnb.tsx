@@ -9,6 +9,7 @@ const Gnb = () => {
                 alt="로고"
                 width={151}
                 height={54}
+                unoptimized
             />
         </header>
     );
