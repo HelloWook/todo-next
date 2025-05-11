@@ -4,7 +4,7 @@ import TodoList from './TodoList';
 
 const meta: Meta<typeof TodoList> = {
     component: TodoList,
-    title: 'TodoList',
+    title: 'molecules/TodoList',
     tags: ['autodocs'],
     argTypes: {}
 };

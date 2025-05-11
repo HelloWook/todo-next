@@ -4,7 +4,7 @@ import TodoItems from './TodoItems';
 
 const meta: Meta<typeof TodoItems> = {
     component: TodoItems,
-    title: 'TodoItems',
+    title: 'molecules/TodoItems',
     tags: ['autodocs'],
     argTypes: {}
 };
