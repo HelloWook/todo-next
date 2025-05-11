@@ -2,17 +2,23 @@
 import { Button } from '@/app/common/components/Button/Button';
 import { DetailCheckList } from '@/app/common/components/CheckList/CheckList';
 import ImageUplaod from '@/app/Item/components/ImageUplaod/ImageUplaod';
-import { getDetailTodo } from '@/app/Todo/utils/action';
+import { deleteTodo, getDetailTodo } from '@/app/Todo/utils/action';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { DetailTodo } from '@/app/Todo/types/todo';
 import React, { useEffect, useState } from 'react';
 
 export default function Item() {
     const [todo, setTodo] = useState<DetailTodo | null>();
 
+    const router = useRouter();
     const params = useParams();
     const itemId = params.id as string;
+
+    const handleDelete = async () => {
+        deleteTodo(itemId);
+        router.push('/');
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -63,7 +69,7 @@ export default function Item() {
                         />
                         수정 완료
                     </Button>
-                    <Button variant="delete">
+                    <Button variant="delete" onClick={handleDelete}>
                         <Image
                             src={'/icons/x.svg'}
                             width={16}

@@ -73,7 +73,6 @@ const editTodo = async (todo: EditTodoData, itemId: number) => {
             throw new Error('API 응답이 올바르지 않습니다');
         }
 
-        revalidatePath('/');
         const data = await response.json();
         return data;
     } catch (error) {
@@ -81,4 +80,25 @@ const editTodo = async (todo: EditTodoData, itemId: number) => {
     }
 };
 
-export { getTodo, addTodo, editTodo, getDetailTodo };
+// 투두 삭제
+const deleteTodo = async (itemId: number) => {
+    try {
+        const response = await fetch(itemUrl + `/${itemId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('API 응답이 올바르지 않습니다');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export { getTodo, addTodo, editTodo, getDetailTodo, deleteTodo };
