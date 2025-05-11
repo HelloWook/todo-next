@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import React, { ButtonHTMLAttributes, ReactNode } from 'react';
-import { Text } from '../Text/Text';
+import { TextBold } from '../Text/Text';
+import Image from 'next/image';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'primary' | 'secondary' | 'delete' | 'success';
@@ -29,15 +30,39 @@ export const Button = ({
             <div className="absolute w-full h-full bg-slate-900 text-slate-900 rounded-3xl border-2 border-slate-900 translate-1 " />
             <button
                 className={clsx(
-                    'flex justify-center items-center  w-full cursor-pointer',
+                    'flex justify-center items-center  w-full cursor-pointer ',
                     commonButtonStyle,
                     ButtonStyle[variant],
                     className
                 )}
                 {...rest}
             >
-                <Text>{children}</Text>
+                <TextBold>{children}</TextBold>
             </button>
         </div>
+    );
+};
+
+interface CircleButton extends ButtonHTMLAttributes<HTMLButtonElement> {
+    className?: string;
+}
+
+export const CircleButton = ({ className, onClick }: CircleButton) => {
+    return (
+        <button
+            className={clsx(
+                'w-[64px] h-[64px] rounded-full bg-slate-200 flex items-center justify-center cursor-pointer',
+                className
+            )}
+            onClick={onClick}
+        >
+            <Image
+                width={24}
+                height={24}
+                alt="플러스 버튼"
+                src={'/icons/plus.svg'}
+                unoptimized
+            />
+        </button>
     );
 };

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Button } from './Button';
+import { Button, CircleButton } from './Button';
 
 const meta: Meta<typeof Button> = {
     component: Button,
@@ -30,4 +30,9 @@ export const Suceess: Story = {
 export const Delete: Story = {
     name: '삭제 버튼 ',
     render: () => <Button variant="delete">{'삭제'}</Button>
+};
+
+export const Circle: Story = {
+    name: '삭제 버튼 ',
+    render: () => <CircleButton />
 };
