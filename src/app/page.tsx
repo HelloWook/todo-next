@@ -9,19 +9,22 @@ import { TodoData } from './Todo/types/todo';
 export default function Home() {
     const [todos, setTodos] = useState<TodoData[]>([]);
 
+    const isEmpty = todos.length > 0;
+
+    const fetchTodos = async () => {
+        const data = await getTodo();
+        if (data) setTodos(data);
+        setTodos(data);
+    };
+
     useEffect(() => {
-        async function fetchTodos() {
-            const data = await getTodo();
-            if (data) setTodos(data);
-            setTodos(data);
-        }
         fetchTodos();
     }, []);
 
     return (
         <div className="pt-[22px]">
-            <Form />
-            <TodoList todos={todos} />
+            <Form isEmpty={isEmpty} setTodos={setTodos} />
+            <TodoList todos={todos} setTodos={setTodos} />
         </div>
     );
 }

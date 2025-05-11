@@ -1,23 +1,29 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import Image from 'next/image';
 import { Button } from '../Button/Button';
 import Input from '../Input/Input';
 import clsx from 'clsx';
 import { addTodo } from '@/app/Todo/utils/action';
 import { useForm } from 'react-hook-form';
-
+import { TodoData } from '@/app/Todo/types/todo';
+import { Todo } from '@/app/Todo/types/todo';
 interface FormProps {
+    isEmpty: boolean;
     className?: string;
+    setTodos: Dispatch<React.SetStateAction<TodoData[]>>;
 }
 
-const Form = ({ isEmpty = false, className }: FormProps) => {
-    const ButtonStlye = isEmpty ? 'primary' : 'secondary';
+const Form = ({ isEmpty = false, className, setTodos }: FormProps) => {
+    const ButtonStlye = isEmpty ? 'secondary' : 'primary';
 
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm<Todo>();
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (data: Todo) => {
         const response = await addTodo(data);
         console.log(response);
+        alert('메모 추가');
+        setTodos((prev: TodoData[]) => [...prev, response as TodoData]);
+        reset();
     };
 
     return (

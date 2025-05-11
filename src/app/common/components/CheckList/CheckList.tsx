@@ -1,14 +1,16 @@
-import React, { ReactNode } from 'react';
+import React, { Dispatch } from 'react';
 import { Heading, Text } from '../Text/Text';
 import clsx from 'clsx';
 import Image from 'next/image';
-
+import { editTodo } from '@/app/Todo/utils/action';
+import { TodoData } from '@/app/Todo/types/todo';
 interface CheckListProps {
-    isDone?: boolean;
-    children: ReactNode;
+    idx: number;
+    isDone: boolean;
+    content: string;
+    setTodos: Dispatch<React.SetStateAction<TodoData[]>>;
 }
-
-type CircleProps = Pick<CheckListProps, 'isDone'>;
+type CircleProps = Pick<CheckListProps, 'isDone' | 'idx' | 'setTodos'>;
 
 const commonStlye =
     ' bg- rounded-3xl border-2 border-slate-900 flex items-center w-full cursor-pointer';
@@ -24,10 +26,28 @@ const CheckBackGroundListStlye = Object.freeze({
 });
 
 // 원 컴포넌트
-const Circle = ({ isDone = false }: CircleProps) => {
+const Circle = ({ isDone, idx, setTodos }: CircleProps) => {
     const backgroundColor = isDone
         ? CircleBackGroundStlye.complete
         : CircleBackGroundStlye.default;
+    const newIsCompleted = !isDone;
+
+    const handleClick = async () => {
+        setTodos((prev) =>
+            prev.map((todo) =>
+                todo.id === idx
+                    ? { ...todo, isCompleted: newIsCompleted }
+                    : todo
+            )
+        );
+
+        await editTodo(
+            {
+                isCompleted: !isDone
+            },
+            idx
+        );
+    };
 
     return (
         <div
@@ -35,6 +55,7 @@ const Circle = ({ isDone = false }: CircleProps) => {
                 'w-[32px] h-[32px] rounded-full border-2 border-slate-900  mr-[16px] flex items-center justify-center',
                 backgroundColor
             )}
+            onClick={handleClick}
         >
             {isDone && (
                 <Image
@@ -49,7 +70,12 @@ const Circle = ({ isDone = false }: CircleProps) => {
     );
 };
 
-export const CheckList = ({ isDone = false, children }: CheckListProps) => {
+export const CheckList = ({
+    isDone,
+    idx,
+    content,
+    setTodos
+}: CheckListProps) => {
     const backgroundColor = isDone
         ? CheckBackGroundListStlye.complete
         : CheckBackGroundListStlye.default;
@@ -62,15 +88,17 @@ export const CheckList = ({ isDone = false, children }: CheckListProps) => {
                 backgroundColor
             )}
         >
-            <Circle isDone={isDone} />
-            <Text className={isDone ? 'line-through' : ''}>{children}</Text>
+            <Circle isDone={isDone} idx={idx} setTodos={setTodos} />
+            <Text className={isDone ? 'line-through' : ''}>{content}</Text>
         </div>
     );
 };
 
 export const DetailCheckList = ({
-    isDone = false,
-    children
+    isDone,
+    content,
+    idx,
+    setTodos
 }: CheckListProps) => {
     const backgroundColor = isDone
         ? CheckBackGroundListStlye.complete
@@ -84,8 +112,8 @@ export const DetailCheckList = ({
                 backgroundColor
             )}
         >
-            <Circle isDone={isDone} />
-            <Heading className={isDone ? 'underline' : ''}>{children}</Heading>
+            <Circle isDone={isDone} idx={idx} setTodos={setTodos} />
+            <Heading className={isDone ? 'underline' : ''}>{content}</Heading>
         </div>
     );
 };
