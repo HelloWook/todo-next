@@ -19,11 +19,22 @@ const Form = ({ isEmpty = false, className, setTodos }: FormProps) => {
     const { register, handleSubmit, reset } = useForm<Todo>();
 
     const onSubmit = async (data: Todo) => {
-        const response = await addTodo(data);
-        console.log(response);
-        alert('메모 추가');
-        setTodos((prev: TodoData[]) => [...prev, response as TodoData]);
-        reset();
+        try {
+            //  임시 ID를 생성하여 낙관적 UI 업데이트
+            const tempTodo: TodoData = {
+                ...data,
+                id: Date.now(),
+                isCompleted: false
+            };
+            setTodos((prev) => [...prev, tempTodo]);
+            const response = await addTodo(data);
+            setTodos((prev) =>
+                prev.map((todo) => (todo.id === tempTodo.id ? response : todo))
+            );
+            reset();
+        } catch (error) {
+            setTodos((prev) => prev.filter((todo) => todo.id !== Date.now()));
+        }
     };
 
     return (
