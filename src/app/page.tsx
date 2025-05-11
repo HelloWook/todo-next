@@ -14,12 +14,15 @@ export default function Home() {
     const fetchTodos = async () => {
         const data = await getTodo();
         if (data) setTodos(data);
-        setTodos(data);
     };
 
     useEffect(() => {
         fetchTodos();
     }, []);
+
+    if (todos.length === 0) {
+        return <div>로딩 중 </div>;
+    }
 
     return (
         <div className="pt-[22px]">

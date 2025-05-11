@@ -1,3 +1,4 @@
+// 나중에 정리
 export interface Todo {
     name: string;
 }
@@ -12,4 +13,9 @@ export interface EditTodoData {
     memo?: string;
     imageUrl?: string;
     isCompleted: boolean;
+}
+
+export interface DetailTodo extends TodoData {
+    tenantId: string;
+    memo: string;
 }
