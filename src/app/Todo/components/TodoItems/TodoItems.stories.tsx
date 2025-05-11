@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import TodoItems from './TodoItems';
+import { mockTodo } from '../../data/todos';
 
 const meta: Meta<typeof TodoItems> = {
     component: TodoItems,
@@ -13,5 +14,7 @@ export default meta;
 type Story = StoryObj<typeof TodoItems>;
 
 export const Default: Story = {
-    args: {}
+    args: {
+        todos: mockTodo
+    }
 };

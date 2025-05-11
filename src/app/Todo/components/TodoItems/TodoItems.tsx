@@ -1,24 +1,20 @@
 import { CheckList } from '@/app/common/components/CheckList/CheckList';
 import React from 'react';
 
-interface Todo {
-    content: string;
-    isDone: boolean;
-}
+import { TodoData } from '../../types/todo';
 
 interface TodoItemsProps {
-    datas?: Todo[];
+    todos: TodoData[];
 }
 
-const TodoItems = ({ datas }: TodoItemsProps) => {
+const TodoItems = ({ todos }: TodoItemsProps) => {
     return (
-        <div>
-            {datas &&
-                datas.map((data, idx) => (
-                    <CheckList key={idx} isDone={data.isDone}>
-                        {data.content}
-                    </CheckList>
-                ))}
+        <div className="flex flex-col-reverse gap-4">
+            {todos.map((todo) => (
+                <CheckList key={todo.id} isDone={todo.isCompleted}>
+                    {todo.name}
+                </CheckList>
+            ))}
         </div>
     );
 };
