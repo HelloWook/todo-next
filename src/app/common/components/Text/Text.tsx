@@ -11,7 +11,9 @@ const CommonStlye = 'flex';
 // 기본 텍스트 컴포넌트
 export const Text = ({ children, className }: TextBaseProps) => {
     return (
-        <span className={clsx('text-nm-16-regular ', CommonStlye, className)}>
+        <span
+            className={clsx('text-nm-16-regular gap-1', CommonStlye, className)}
+        >
             {children}
         </span>
     );
@@ -20,7 +22,7 @@ export const Text = ({ children, className }: TextBaseProps) => {
 // 볼드 텍스트
 export const TextBold = ({ children, className }: TextBaseProps) => {
     return (
-        <span className={clsx('text-nm-16-bold', CommonStlye, className)}>
+        <span className={clsx('text-nm-16-bold gap-1', CommonStlye, className)}>
             {children}
         </span>
     );
@@ -34,7 +36,7 @@ export const SubHeading = ({ children, className }: TextBaseProps) => {
 // 큰 제목
 export const Heading = ({ children, className }: TextBaseProps) => {
     return (
-        <span className={clsx('text-nm-20-bold', CommonStlye, className)}>
+        <span className={clsx('text-nm-20-bold gap-1', CommonStlye, className)}>
             {children}
         </span>
     );
@@ -43,7 +45,9 @@ export const Heading = ({ children, className }: TextBaseProps) => {
 // 더 큰 제목
 export const LargeHeading = ({ children, className }: TextBaseProps) => {
     return (
-        <span className={clsx('text-xl font-bold', CommonStlye, className)}>
+        <span
+            className={clsx('text-xl font-bold gap-1', CommonStlye, className)}
+        >
             {children}
         </span>
     );

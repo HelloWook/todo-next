@@ -68,7 +68,10 @@ export const CheckList = ({ isDone = false, children }: CheckListProps) => {
     );
 };
 
-export const DetailCheckList = ({ isDone, children }: CheckListProps) => {
+export const DetailCheckList = ({
+    isDone = false,
+    children
+}: CheckListProps) => {
     const backgroundColor = isDone
         ? CheckBackGroundListStlye.complete
         : CheckBackGroundListStlye.default;
@@ -76,7 +79,7 @@ export const DetailCheckList = ({ isDone, children }: CheckListProps) => {
     return (
         <div
             className={clsx(
-                'w-[996px] h-[64px] justify-center ',
+                ' justify-center  h-[64px]',
                 commonStlye,
                 backgroundColor
             )}
