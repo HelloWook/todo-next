@@ -8,7 +8,7 @@ const ImageUplaod = () => {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const defaultApi = '/img/bg.svg';
+    const defaultImg = '/img/bg.svg';
 
     // 파일 선택 시 호출되는 함수
     const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,17 +31,18 @@ const ImageUplaod = () => {
             <CircleButton
                 className="absolute z-30 right-4 bottom-4"
                 onClick={(e) => {
-                    console.log('hi');
                     e.stopPropagation();
                     handleButtonClick();
                 }}
             />
 
             <div className="relative">
-                <img
+                <Image
                     alt="미리보기 이미지"
-                    src={previewUrl || defaultApi}
-                    className="rounded-2xl object-cover w-[384px] h-[311px]"
+                    src={previewUrl || defaultImg}
+                    className="rounded-2xl object-cover w-[384px] h-[311px] "
+                    width={384}
+                    height={311}
                 />
                 {!previewUrl && (
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -49,7 +50,7 @@ const ImageUplaod = () => {
                             width={64}
                             height={64}
                             alt="사진 이모지"
-                            src={'icons/img.svg'}
+                            src={'/icons/img.svg'}
                         />
                     </div>
                 )}

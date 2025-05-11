@@ -9,7 +9,11 @@ export default function Item() {
     return (
         <div className="bg-white h-screen pt-[22px] ">
             <div className=" max-w-[996px] m-auto flex flex-col gap-6">
-                <DetailCheckList>{'반가'}</DetailCheckList>
+                <DetailCheckList
+                    content="반가"
+                    idx={1}
+                    isDone={false}
+                ></DetailCheckList>
 
                 <div className="flex gap-6">
                     <ImageUplaod />
