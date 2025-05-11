@@ -38,7 +38,8 @@ const Circle = ({ isDone, idx, setTodos }: CircleProps) => {
         : CircleBackGroundStlye.default;
     const newIsCompleted = !isDone;
 
-    const handleClick = async () => {
+    const handleClick = async (event: React.MouseEvent<HTMLDivElement>) => {
+        event.stopPropagation();
         if (!setTodos) return;
 
         setTodos((prev) =>
