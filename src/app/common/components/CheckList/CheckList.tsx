@@ -1,11 +1,12 @@
 'use client';
-import React, { Dispatch } from 'react';
-import { Heading, Text } from '../Text/Text';
+import React, { Dispatch, ReactNode } from 'react';
+import { Text } from '../Text/Text';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { editTodo } from '@/app/Todo/utils/action';
-import { TodoData } from '@/app/Todo/types/todo';
+import { TodoData, DetailTodo } from '@/app/Todo/types/todo';
 import { useRouter } from 'next/navigation';
+
 interface CheckListProps {
     idx: number;
     isDone: boolean;
@@ -13,10 +14,15 @@ interface CheckListProps {
     setTodos: Dispatch<React.SetStateAction<TodoData[]>>;
 }
 
-type CircleProps = Pick<CheckListProps, 'isDone' | 'idx'> &
-    Partial<Pick<CheckListProps, 'setTodos'>>;
+type CircleProps = Pick<CheckListProps, 'isDone' | 'idx'> & {
+    handleClick: (e: React.MouseEvent<HTMLDivElement>) => Promise<void>;
+    className?: string;
+};
 
-type DetailCheckListProps = Pick<CheckListProps, 'isDone' | 'idx' | 'content'>;
+type DetailCheckListProps = Pick<CheckListProps, 'isDone' | 'idx'> & {
+    setTodo: Dispatch<React.SetStateAction<DetailTodo | null>>;
+    children: ReactNode;
+};
 
 const commonStlye =
     ' bg- rounded-3xl border-2 border-slate-900 flex items-center w-full cursor-pointer';
@@ -32,44 +38,17 @@ const CheckBackGroundListStlye = Object.freeze({
 });
 
 // 원 컴포넌트
-const Circle = ({ isDone, idx, setTodos }: CircleProps) => {
+const Circle = ({ isDone, handleClick, className }: CircleProps) => {
     const backgroundColor = isDone
         ? CircleBackGroundStlye.complete
         : CircleBackGroundStlye.default;
-    const newIsCompleted = !isDone;
-
-    const handleClick = async (event: React.MouseEvent<HTMLDivElement>) => {
-        event.stopPropagation();
-        if (!setTodos) return;
-
-        setTodos((prev) =>
-            prev.map((todo) =>
-                todo.id === idx
-                    ? { ...todo, isCompleted: newIsCompleted }
-                    : todo
-            )
-        );
-        try {
-            await editTodo(
-                {
-                    isCompleted: !isDone
-                },
-                idx
-            );
-        } catch (error) {
-            setTodos((prev) =>
-                prev.map((todo) =>
-                    todo.id === idx ? { ...todo, isCompleted: isDone } : todo
-                )
-            );
-        }
-    };
 
     return (
         <div
             className={clsx(
                 'w-[32px] h-[32px] rounded-full border-2 border-slate-900  mr-[16px] flex items-center justify-center',
-                backgroundColor
+                backgroundColor,
+                className
             )}
             onClick={handleClick}
         >
@@ -102,6 +81,38 @@ export const CheckList = ({
         router.push('item' + `/${idx}`);
     };
 
+    const handleCircleClick = async (
+        event: React.MouseEvent<HTMLDivElement>
+    ) => {
+        event.stopPropagation();
+
+        const newIsCompleted = !isDone;
+
+        setTodos((prev) =>
+            prev.map((todo) =>
+                todo.id === idx
+                    ? { ...todo, isCompleted: newIsCompleted }
+                    : todo
+            )
+        );
+        try {
+            await editTodo(
+                {
+                    isCompleted: newIsCompleted
+                },
+                idx
+            );
+        } catch (error) {
+            setTodos((prev) =>
+                prev.map((todo) =>
+                    todo.id === idx
+                        ? { ...todo, isCompleted: !newIsCompleted }
+                        : todo
+                )
+            );
+        }
+    };
+
     return (
         <div
             className={clsx(
@@ -111,7 +122,7 @@ export const CheckList = ({
             )}
             onClick={handleClick}
         >
-            <Circle isDone={isDone} idx={idx} setTodos={setTodos} />
+            <Circle isDone={isDone} idx={idx} handleClick={handleCircleClick} />
             <Text className={isDone ? 'line-through' : ''}>{content}</Text>
         </div>
     );
@@ -119,23 +130,54 @@ export const CheckList = ({
 
 export const DetailCheckList = ({
     isDone,
-    content,
-    idx
+    children,
+    idx,
+    setTodo
 }: DetailCheckListProps) => {
     const backgroundColor = isDone
         ? CheckBackGroundListStlye.complete
         : CheckBackGroundListStlye.default;
 
+    const handleCircleClick = async (
+        event: React.MouseEvent<HTMLDivElement>
+    ) => {
+        event.stopPropagation();
+        const newIsCompleted = !isDone;
+
+        try {
+            setTodo((prev) => {
+                if (!prev) return prev;
+                return { ...prev, isCompleted: newIsCompleted };
+            });
+            await editTodo(
+                {
+                    isCompleted: newIsCompleted
+                },
+                idx
+            );
+        } catch (error) {
+            setTodo((prev) => {
+                if (!prev) return prev;
+                return { ...prev, isCompleted: !newIsCompleted };
+            });
+        }
+    };
+
     return (
         <div
             className={clsx(
-                ' justify-center  h-[64px]',
+                ' justify-center h-[64px]',
                 commonStlye,
                 backgroundColor
             )}
         >
-            <Circle isDone={isDone} idx={idx} />
-            <Heading className={isDone ? 'underline' : ''}>{content}</Heading>
+            <Circle
+                isDone={isDone}
+                idx={idx}
+                handleClick={handleCircleClick}
+                className="ml-[100px]"
+            />
+            {children}
         </div>
     );
 };

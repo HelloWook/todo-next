@@ -1,7 +1,6 @@
 'use server';
 const url = process.env.NEXT_PUBLIC_API_URL;
 const itemUrl = url + '/items';
-import { revalidatePath } from 'next/cache';
 import { Todo, EditTodoData } from './../types/todo';
 
 // 투두 데이터불러오기
@@ -81,7 +80,7 @@ const editTodo = async (todo: EditTodoData, itemId: number) => {
 };
 
 // 투두 삭제
-const deleteTodo = async (itemId: number) => {
+const deleteTodo = async (itemId: string) => {
     try {
         const response = await fetch(itemUrl + `/${itemId}`, {
             method: 'DELETE',

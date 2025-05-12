@@ -28,6 +28,7 @@ const Form = ({ isEmpty = false, className, setTodos }: FormProps) => {
             };
             setTodos((prev) => [...prev, tempTodo]);
             const response = await addTodo(data);
+
             setTodos((prev) =>
                 prev.map((todo) => (todo.id === tempTodo.id ? response : todo))
             );

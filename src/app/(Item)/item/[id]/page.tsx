@@ -2,23 +2,24 @@
 import { Button } from '@/app/common/components/Button/Button';
 import { DetailCheckList } from '@/app/common/components/CheckList/CheckList';
 import ImageUplaod from '@/app/Item/components/ImageUplaod/ImageUplaod';
-import { deleteTodo, getDetailTodo } from '@/app/Todo/utils/action';
+import { deleteTodo, editTodo, getDetailTodo } from '@/app/Todo/utils/action';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { DetailTodo } from '@/app/Todo/types/todo';
 import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import clsx from 'clsx';
 
 export default function Item() {
-    const [todo, setTodo] = useState<DetailTodo | null>();
+    const [todo, setTodo] = useState<DetailTodo | null>(null);
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [uploadIamgeUrl, setUploadIamgeUrl] = useState<string>();
 
     const router = useRouter();
     const params = useParams();
-    const itemId = params.id as string;
+    const { register, handleSubmit, getValues } = useForm();
 
-    const handleDelete = async () => {
-        deleteTodo(itemId);
-        router.push('/');
-    };
+    const itemId = params.id as string;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,17 +33,54 @@ export default function Item() {
         return <div>로딩 중 </div>;
     }
 
+    const handleDelete = async () => {
+        deleteTodo(itemId);
+        router.push('/');
+    };
+
+    const onSubmit = async () => {
+        const nameValue = getValues('name');
+        const memoValue = getValues('memo');
+        await editTodo(
+            {
+                isCompleted: todo?.isCompleted,
+                imageUrl: uploadIamgeUrl,
+                memo: memoValue,
+                name: nameValue
+            },
+            todo.id
+        );
+        router.push('/');
+    };
+
     return (
         <div className="bg-white h-screen pt-[22px] ">
-            <div className=" max-w-[996px] m-auto flex flex-col gap-6">
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className=" max-w-[996px] m-auto flex flex-col gap-6"
+            >
                 <DetailCheckList
-                    content={todo.name}
                     idx={todo.id}
                     isDone={todo.isCompleted}
-                ></DetailCheckList>
+                    setTodo={setTodo}
+                >
+                    <input
+                        className={clsx(
+                            todo.isCompleted ? 'underline' : '',
+                            'text-nm-20-bold focus:outline-0 '
+                        )}
+                        defaultValue={todo.name}
+                        {...register('name')}
+                    />
+                </DetailCheckList>
 
                 <div className="flex gap-6">
-                    <ImageUplaod />
+                    <ImageUplaod
+                        setUploadIamgeUrl={setUploadIamgeUrl}
+                        setSelectedImage={setSelectedImage}
+                        selectedImage={selectedImage}
+                        TodoimageUrl={todo.imageUrl}
+                    />
                     <div className="relative w-[588px] h-[311px] flex justify-center">
                         <Image
                             width={588}
@@ -54,12 +92,14 @@ export default function Item() {
                         <textarea
                             placeholder="메모를 작성해주세요"
                             className="w-[557px] h-[229px] relative mt-[60px] focus:outline-0"
-                        ></textarea>
+                            {...register('memo')}
+                            defaultValue={todo.memo}
+                        />
                     </div>
                 </div>
 
                 <div className="flex gap-4 justify-end">
-                    <Button variant="secondary">
+                    <Button variant="secondary" type="submit">
                         <Image
                             src={'/icons/check-black.svg'}
                             width={16}
@@ -80,7 +120,7 @@ export default function Item() {
                         삭제하기
                     </Button>
                 </div>
-            </div>
+            </form>
         </div>
     );
 }

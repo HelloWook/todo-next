@@ -18,4 +18,5 @@ export interface EditTodoData {
 export interface DetailTodo extends TodoData {
     tenantId: string;
     memo: string;
+    imageUrl: string;
 }
