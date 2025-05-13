@@ -48,6 +48,17 @@
         font-weight: var(--fontWeight-bold);
     }
 
+    .animate-spin {
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    }
+
     .text-nm-18-bold {
         font-size: var(--fontSize-nm-18);
         font-weight: var(--fontWeight-bold);
