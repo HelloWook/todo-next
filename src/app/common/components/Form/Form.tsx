@@ -16,9 +16,15 @@ interface FormProps {
 const Form = ({ isEmpty = false, className, setTodos }: FormProps) => {
     const ButtonStlye = isEmpty ? 'secondary' : 'primary';
 
-    const { register, handleSubmit, reset } = useForm<Todo>();
+    const { register, handleSubmit, reset, getValues } = useForm<Todo>();
 
     const onSubmit = async (data: Todo) => {
+        const nameValue = getValues('name');
+        if (!nameValue) {
+            alert('제목을 입력해주세요');
+            return;
+        }
+
         try {
             //  임시 ID를 생성하여 낙관적 UI 업데이트
             const tempTodo: TodoData = {
@@ -51,7 +57,11 @@ const Form = ({ isEmpty = false, className, setTodos }: FormProps) => {
                         width={16}
                         height={16}
                         alt="플러스 아이콘"
-                        src={'/icons/plus.svg'}
+                        src={
+                            ButtonStlye === 'primary'
+                                ? '/icons/plus-white.svg'
+                                : '/icons/plus.svg'
+                        }
                         unoptimized
                     />
                     <div className="hidden sm:inline">{'추가하기'}</div>
