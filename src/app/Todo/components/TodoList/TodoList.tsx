@@ -1,35 +1,45 @@
 import Stauts from '@/app/common/components/Stauts/Stauts';
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useMemo } from 'react';
 import TodoItems from '../TodoItems/TodoItems';
 import NoData from '../NoData/NoData';
 import { TodoData } from '../../types/todo';
 
 interface TodoListProps {
-    todos: TodoData[];
+    todos: TodoData[] | null | undefined;
     setTodos: Dispatch<React.SetStateAction<TodoData[]>>;
 }
 
 const TodoList = ({ todos, setTodos }: TodoListProps) => {
+    const incompleteTodos = useMemo(() => {
+        if (!todos || !Array.isArray(todos)) return [];
+        return todos.filter(
+            (todo) =>
+                todo && typeof todo === 'object' && todo.isCompleted === false
+        );
+    }, [todos]);
+
+    const completedTodos = useMemo(() => {
+        if (!todos || !Array.isArray(todos)) return [];
+        return todos.filter(
+            (todo) =>
+                todo && typeof todo === 'object' && todo.isCompleted === true
+        );
+    }, [todos]);
+
     return (
         <div className="flex flex-wrap max-w-[1196px] w-full justify-between gap-5 mb-20">
             <div className="mt-[42px] flex flex-col gap-4 w-full md:w-[calc(50%-10px)]">
                 <Stauts />
-                {todos.filter((todo) => !todo.isCompleted).length > 0 ? (
-                    <TodoItems
-                        todos={todos.filter((todo) => !todo.isCompleted)}
-                        setTodos={setTodos}
-                    />
+                {incompleteTodos.length > 0 ? (
+                    <TodoItems todos={incompleteTodos} setTodos={setTodos} />
                 ) : (
                     <NoData />
                 )}
             </div>
             <div className="mt-[42px] flex flex-col gap-4 w-full md:w-[calc(50%-10px)]">
                 <Stauts isDone={true} />
-                {todos.filter((todo) => todo.isCompleted).length > 0 ? (
-                    <TodoItems
-                        todos={todos.filter((todo) => todo.isCompleted)}
-                        setTodos={setTodos}
-                    />
+                {completedTodos.length > 0 ? (
+                    <TodoItems todos={completedTodos} setTodos={setTodos} />
                 ) : (
                     <NoData isDone={true} />
                 )}
