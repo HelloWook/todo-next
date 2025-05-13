@@ -115,7 +115,7 @@ export default function Item() {
                     </Button>
                     <Button variant="delete" onClick={handleDelete}>
                         <Image
-                            src={'/icons/x.svg'}
+                            src={'/icons/X.svg'}
                             width={16}
                             height={16}
                             alt="체크 표시"
