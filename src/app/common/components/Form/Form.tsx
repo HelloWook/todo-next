@@ -44,19 +44,19 @@ const Form = ({ isEmpty = false, className, setTodos }: FormProps) => {
             onSubmit={handleSubmit(onSubmit)}
         >
             <Input {...register('name')} />
-            <Button variant={ButtonStlye} type="submit">
-                <Image
-                    width={16}
-                    height={16}
-                    alt="플러스 아이콘"
-                    src={'/icons/plus.svg'}
-                    style={{
-                        marginRight: '6px'
-                    }}
-                    unoptimized
-                />
-                {'추가하기'}
-            </Button>
+
+            <div className="max-w-[64px] w-full sm:max-w-[168px]">
+                <Button variant={ButtonStlye} type="submit">
+                    <Image
+                        width={16}
+                        height={16}
+                        alt="플러스 아이콘"
+                        src={'/icons/plus.svg'}
+                        unoptimized
+                    />
+                    <div className="hidden sm:inline">{'추가하기'}</div>
+                </Button>
+            </div>
         </form>
     );
 };

@@ -53,7 +53,7 @@ const ImageUplaod = ({
     };
 
     return (
-        <div className="relative w-fit h-fit border-slate-300 border-dashed border-2 rounded-2xl">
+        <div className="relative   w-full h-fit border-slate-300 border-dashed border-2 rounded-2xl md:max-w-[384px]">
             <CircleButton
                 className="absolute z-30 right-4 bottom-4"
                 onClick={(e) => {
@@ -64,11 +64,11 @@ const ImageUplaod = ({
             />
 
             <div className="relative">
-                <div className="relative w-[384px] h-[311px]">
+                <div className="relative h-[311px] md:max-w-[384px]">
                     <Image
                         alt="미리보기 이미지"
                         src={previewUrl || TodoimageUrl || defaultImg}
-                        className="rounded-2xl object-cover"
+                        className="rounded-2xl object-cover w-full"
                         fill
                     />
                 </div>

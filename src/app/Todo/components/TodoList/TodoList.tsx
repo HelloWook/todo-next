@@ -11,8 +11,8 @@ interface TodoListProps {
 
 const TodoList = ({ todos, setTodos }: TodoListProps) => {
     return (
-        <div className="flex w-full justify-between gap-5">
-            <div className="mt-[42px] flex flex-col gap-4 w-full flex-1/2">
+        <div className="flex flex-wrap max-w-[1196px] w-full justify-between gap-5 mb-20">
+            <div className="mt-[42px] flex flex-col gap-4 w-full md:w-[calc(50%-10px)]">
                 <Stauts />
                 {todos ? (
                     <TodoItems
@@ -23,7 +23,7 @@ const TodoList = ({ todos, setTodos }: TodoListProps) => {
                     <NoData />
                 )}
             </div>
-            <div className="mt-[42px] flex flex-col gap-4 w-full flex-1/2 ">
+            <div className="mt-[42px] flex flex-col gap-4 w-full md:w-[calc(50%-10px)]">
                 <Stauts isDone={true} />
                 {todos ? (
                     <TodoItems

@@ -10,7 +10,7 @@ interface TodoItemsProps {
 
 const TodoItems = ({ todos, setTodos }: TodoItemsProps) => {
     return (
-        <div className="flex flex-col-reverse gap-4">
+        <div className="flex flex-col-reverse gap-4 ">
             {todos.map((todo) => (
                 <CheckList
                     setTodos={setTodos}

@@ -14,9 +14,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className={myFont.className}>
-            <body className="bg-gray-50 overflow-hidden">
+            <body className="bg-gray-50">
                 <Gnb />
-                <div className="max-w-[1200px] m-auto w-[95%] ">{children}</div>
+                <div className="">{children}</div>
             </body>
         </html>
     );

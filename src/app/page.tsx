@@ -25,7 +25,7 @@ export default function Home() {
     }
 
     return (
-        <div className="pt-[22px]">
+        <div className="pt-[22px]  max-w-[1200px] m-auto w-[95%]  ">
             <Form isEmpty={isEmpty} setTodos={setTodos} />
             <TodoList todos={todos} setTodos={setTodos} />
         </div>

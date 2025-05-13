@@ -54,10 +54,10 @@ export default function Item() {
     };
 
     return (
-        <div className="bg-white h-screen pt-[22px] ">
+        <div className="bg-white max-w-[1200px] m-auto pt-[22px] h-full ">
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className=" max-w-[996px] m-auto flex flex-col gap-6"
+                className=" w-[95%] max-w-[996px] m-auto flex flex-col gap-6  h-full md:h-screen"
             >
                 <DetailCheckList
                     idx={todo.id}
@@ -74,31 +74,30 @@ export default function Item() {
                     />
                 </DetailCheckList>
 
-                <div className="flex gap-6">
+                <div className="flex gap-6 flex-wrap md:flex-nowrap">
                     <ImageUplaod
                         setUploadIamgeUrl={setUploadIamgeUrl}
                         setSelectedImage={setSelectedImage}
                         selectedImage={selectedImage}
                         TodoimageUrl={todo.imageUrl}
                     />
-                    <div className="relative w-[588px] h-[311px] flex justify-center">
+                    <div className="relative w-full md:max-w-[588px] h-[311px] flex justify-center">
                         <Image
-                            width={588}
-                            height={311}
                             src={'/img/memo.jpg'}
                             alt="메모"
                             className="absolute"
+                            fill
                         />
                         <textarea
                             placeholder="메모를 작성해주세요"
-                            className="w-[557px] h-[229px] relative mt-[60px] focus:outline-0"
+                            className="max-w-[557px] h-[229px] w-full relative mt-[60px] focus:outline-0"
                             {...register('memo')}
                             defaultValue={todo.memo}
                         />
                     </div>
                 </div>
 
-                <div className="flex gap-4 justify-end">
+                <div className="flex gap-4 justify-center mb-20 md:justify-end ">
                     <Button variant="secondary" type="submit">
                         <Image
                             src={'/icons/check-black.svg'}

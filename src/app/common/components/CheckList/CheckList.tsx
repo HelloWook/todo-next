@@ -116,7 +116,7 @@ export const CheckList = ({
     return (
         <div
             className={clsx(
-                'max-w-[588px] h-[50px] pl-[14px] ',
+                ' h-[50px] pl-[14px] w-full',
                 commonStlye,
                 backgroundColor
             )}
