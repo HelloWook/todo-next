@@ -41,6 +41,7 @@ const ImageUplaod = ({
                     handleButtonClick();
                 }}
                 type="button"
+                variant={!previewUrl && !TodoimageUrl ? 'primary' : 'secondary'}
             />
 
             <div className="relative">

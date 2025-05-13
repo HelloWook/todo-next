@@ -44,22 +44,37 @@ export const Button = ({
 
 interface CircleButton extends ButtonHTMLAttributes<HTMLButtonElement> {
     className?: string;
+    variant?: 'primary' | 'secondary';
 }
 
-export const CircleButton = ({ className, onClick }: CircleButton) => {
+const CricleButtonStyle = Object.freeze({
+    primary: ' bg-slate-200',
+    secondary: 'bg-slate-900/50 border-2 border-black'
+});
+
+export const CircleButton = ({
+    className,
+    onClick,
+    variant = 'primary'
+}: CircleButton) => {
     return (
         <button
             className={clsx(
-                'w-[64px] h-[64px] rounded-full bg-slate-200 flex items-center justify-center cursor-pointer',
-                className
+                'w-[64px] h-[64px] rounded-full  flex items-center justify-center cursor-pointer',
+                className,
+                CricleButtonStyle[variant]
             )}
             onClick={onClick}
         >
             <Image
                 width={24}
                 height={24}
-                alt="플러스 버튼"
-                src={'/icons/plus.svg'}
+                alt="아이콘"
+                src={
+                    variant === 'primary'
+                        ? '/icons/plus-gray.svg'
+                        : '/icons/edit-white.svg'
+                }
                 unoptimized
             />
         </button>

@@ -78,6 +78,9 @@ export const CheckList = ({
     const router = useRouter();
 
     const handleClick = () => {
+        if (idx.toString().length >= 12) {
+            return;
+        }
         router.push('item' + `/${idx}`);
     };
 

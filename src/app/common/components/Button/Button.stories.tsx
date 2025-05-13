@@ -33,6 +33,11 @@ export const Delete: Story = {
 };
 
 export const Circle: Story = {
-    name: '삭제 버튼 ',
+    name: '이미지 버튼1',
     render: () => <CircleButton />
+};
+
+export const Circle2: Story = {
+    name: '이미지 버튼2',
+    render: () => <CircleButton variant={'secondary'} />
 };
