@@ -16,6 +16,7 @@ export default function Home() {
         if (data) setTodos(data);
     };
 
+    // 렌더링 시 투두 데이터 불러오기
     useEffect(() => {
         fetchTodos();
     }, []);

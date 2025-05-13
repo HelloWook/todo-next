@@ -14,6 +14,7 @@ export default function Item() {
     const [todo, setTodo] = useState<DetailTodo | null>(null);
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [uploadIamgeUrl, setUploadIamgeUrl] = useState<string>();
+    const [isLoading, setIsLaoding] = useState<boolean>(false);
 
     const router = useRouter();
     const params = useParams();
@@ -21,6 +22,7 @@ export default function Item() {
 
     const itemId = params.id as string;
 
+    // 투두 불러오기
     useEffect(() => {
         const fetchData = async () => {
             const data = await getDetailTodo(itemId);
@@ -33,6 +35,7 @@ export default function Item() {
         return <div>로딩 중 </div>;
     }
 
+    // 투두 삭제
     const handleDelete = async () => {
         deleteTodo(itemId);
         router.push('/');
@@ -52,6 +55,10 @@ export default function Item() {
         );
         router.push('/');
     };
+
+    if (isLoading) {
+        return;
+    }
 
     return (
         <div className="bg-white max-w-[1200px] m-auto pt-[22px] h-full ">
