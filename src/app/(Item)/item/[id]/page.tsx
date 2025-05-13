@@ -9,12 +9,13 @@ import { DetailTodo } from '@/app/Todo/types/todo';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
+import useLoading from '@/app/common/hooks/useLoading';
 
 export default function Item() {
     const [todo, setTodo] = useState<DetailTodo | null>(null);
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [uploadIamgeUrl, setUploadIamgeUrl] = useState<string>();
-    const [isLoading, setIsLaoding] = useState<boolean>(false);
+    const { Spinner, isLoading, withLoading } = useLoading();
 
     const router = useRouter();
     const params = useParams();
@@ -23,16 +24,17 @@ export default function Item() {
     const itemId = params.id as string;
 
     // 투두 불러오기
+    const fetchData = async () => {
+        const data = await getDetailTodo(itemId);
+        if (data) setTodo(data);
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            const data = await getDetailTodo(itemId);
-            if (data) setTodo(data);
-        };
-        fetchData();
+        withLoading(fetchData);
     }, []);
 
-    if (!todo) {
-        return <div>로딩 중 </div>;
+    if (isLoading || !todo) {
+        return <Spinner />;
     }
 
     // 투두 삭제
@@ -55,10 +57,6 @@ export default function Item() {
         );
         router.push('/');
     };
-
-    if (isLoading) {
-        return;
-    }
 
     return (
         <div className="bg-white max-w-[1200px] m-auto pt-[22px] h-full ">

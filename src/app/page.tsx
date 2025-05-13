@@ -5,9 +5,11 @@ import Form from './common/components/Form/Form';
 import TodoList from './Todo/components/TodoList/TodoList';
 import { getTodo } from './Todo/utils/action';
 import { TodoData } from './Todo/types/todo';
+import useLoading from './common/hooks/useLoading';
 
 export default function Home() {
     const [todos, setTodos] = useState<TodoData[]>([]);
+    const { Spinner, isLoading, withLoading } = useLoading();
 
     const isEmpty = todos.length > 0;
 
@@ -18,11 +20,11 @@ export default function Home() {
 
     // 렌더링 시 투두 데이터 불러오기
     useEffect(() => {
-        fetchTodos();
+        withLoading(fetchTodos);
     }, []);
 
-    if (todos.length === 0) {
-        return <div>로딩 중 </div>;
+    if (isLoading) {
+        return <Spinner />;
     }
 
     return (

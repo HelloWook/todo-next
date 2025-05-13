@@ -14,7 +14,7 @@ const TodoList = ({ todos, setTodos }: TodoListProps) => {
         <div className="flex flex-wrap max-w-[1196px] w-full justify-between gap-5 mb-20">
             <div className="mt-[42px] flex flex-col gap-4 w-full md:w-[calc(50%-10px)]">
                 <Stauts />
-                {todos ? (
+                {todos.filter((todo) => !todo.isCompleted).length > 0 ? (
                     <TodoItems
                         todos={todos.filter((todo) => !todo.isCompleted)}
                         setTodos={setTodos}
@@ -25,7 +25,7 @@ const TodoList = ({ todos, setTodos }: TodoListProps) => {
             </div>
             <div className="mt-[42px] flex flex-col gap-4 w-full md:w-[calc(50%-10px)]">
                 <Stauts isDone={true} />
-                {todos ? (
+                {todos.filter((todo) => todo.isCompleted).length > 0 ? (
                     <TodoItems
                         todos={todos.filter((todo) => todo.isCompleted)}
                         setTodos={setTodos}

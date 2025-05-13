@@ -10,11 +10,11 @@ const NoData = ({ isDone = false }: NoDataProps) => {
     const imgType = isDone ? '/img/empty2.svg' : '/img/empty.svg';
     const content = isDone ? (
         <TextBold>
-            {'할 일이 없어요'} <br /> {'새롭게 추가해주세요!'}
+            {'아직 다 한 일이 없어요'} <br /> {'해야 할 일을 체크해보세요!'}
         </TextBold>
     ) : (
         <TextBold>
-            {'할 일이 없어요'} <br /> {'해야 할 일을 체크해보세요!'}
+            {'할 일이 없어요'} <br /> {'TODO를 새롭게 추가해주세요!'}
         </TextBold>
     );
     return (
