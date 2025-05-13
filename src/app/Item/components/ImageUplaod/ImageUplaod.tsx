@@ -2,25 +2,20 @@
 import { CircleButton } from '@/app/common/components/Button/Button';
 import Image from 'next/image';
 import React, { ChangeEvent, Dispatch, useRef, useState } from 'react';
-import { uploadImage } from '@/app/Item/util/action';
 import useLoading from '@/app/common/hooks/useLoading';
 
 interface ImageUplaodProps {
-    selectedImage: File | null;
     setSelectedImage: Dispatch<React.SetStateAction<File | null>>;
-    setUploadIamgeUrl: Dispatch<React.SetStateAction<string | undefined>>;
     TodoimageUrl: string;
+    previewUrl: string | null;
 }
 
 const ImageUplaod = ({
     setSelectedImage,
-    selectedImage,
-    setUploadIamgeUrl,
-    TodoimageUrl
+    TodoimageUrl,
+    previewUrl
 }: ImageUplaodProps) => {
-    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const { Spinner, isLoading, withLoading } = useLoading();
 
     const defaultImg = '/img/bg.svg';
 
@@ -31,23 +26,6 @@ const ImageUplaod = ({
             const file = files[0];
             setSelectedImage(file);
         }
-        const url = await withLoading(getUrl);
-        setPreviewUrl(url);
-    };
-
-    // 이미지 url 받아오는 함수
-    const getUrl = async () => {
-        if (!selectedImage) return;
-
-        const formData = new FormData();
-
-        formData.append('image', selectedImage);
-
-        // 받아온 이미지 url
-        const data = await uploadImage(formData);
-
-        setUploadIamgeUrl(data.url);
-        return data.url;
     };
 
     const handleButtonClick = () => {
@@ -56,21 +34,15 @@ const ImageUplaod = ({
 
     return (
         <div className="relative  w-full h-fit border-slate-300 border-dashed border-2 rounded-2xl md:max-w-[384px]">
-            {isLoading ? (
-                <Spinner
-                    className="absolute z-30 right-4 bottom-4"
-                    sentence={'이미지를 불러오는 중 입니다.'}
-                />
-            ) : (
-                <CircleButton
-                    className="absolute z-30 right-4 bottom-4 "
-                    onClick={(e) => {
-                        e.preventDefault();
-                        handleButtonClick();
-                    }}
-                    type="button"
-                />
-            )}
+            <CircleButton
+                className="absolute z-30 right-4 bottom-4 "
+                onClick={(e) => {
+                    e.preventDefault();
+                    handleButtonClick();
+                }}
+                type="button"
+            />
+
             <div className="relative">
                 <div className="relative h-[311px] md:max-w-[384px]">
                     <Image

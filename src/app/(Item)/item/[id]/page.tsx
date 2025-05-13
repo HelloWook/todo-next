@@ -10,12 +10,13 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
 import useLoading from '@/app/common/hooks/useLoading';
+import { uploadImage } from '@/app/Item/util/action';
 
 export default function Item() {
     const [todo, setTodo] = useState<DetailTodo | null>(null);
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
-    const [uploadIamgeUrl, setUploadIamgeUrl] = useState<string>();
     const { Spinner, isLoading, withLoading } = useLoading();
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
     const router = useRouter();
     const params = useParams();
@@ -26,12 +27,22 @@ export default function Item() {
     // 투두 불러오기
     const fetchData = async () => {
         const data = await getDetailTodo(itemId);
-        if (data) setTodo(data);
+
+        if (data) {
+            setTodo(data);
+        }
     };
 
     useEffect(() => {
         withLoading(fetchData);
     }, []);
+
+    useEffect(() => {
+        if (selectedImage) {
+            const url = URL.createObjectURL(selectedImage);
+            setPreviewUrl(url);
+        }
+    }, [selectedImage]);
 
     if (isLoading || !todo) {
         return <Spinner />;
@@ -46,16 +57,31 @@ export default function Item() {
     const onSubmit = async () => {
         const nameValue = getValues('name');
         const memoValue = getValues('memo');
+        const { url } = await getUrl();
+
         await editTodo(
             {
                 isCompleted: todo?.isCompleted,
-                imageUrl: uploadIamgeUrl,
+                imageUrl: url,
                 memo: memoValue,
                 name: nameValue
             },
             todo.id
         );
         router.push('/');
+    };
+
+    // 이미지 url 받아오는 함수
+    const getUrl = async () => {
+        if (selectedImage && previewUrl) {
+            const formData = new FormData();
+            formData.append('image', selectedImage);
+            // 받아온 이미지 url
+            const data = await uploadImage(formData);
+            return data;
+        } else {
+            return todo.imageUrl || '';
+        }
     };
 
     return (
@@ -81,9 +107,8 @@ export default function Item() {
 
                 <div className="flex gap-6 flex-wrap md:flex-nowrap">
                     <ImageUplaod
-                        setUploadIamgeUrl={setUploadIamgeUrl}
+                        previewUrl={previewUrl}
                         setSelectedImage={setSelectedImage}
-                        selectedImage={selectedImage}
                         TodoimageUrl={todo.imageUrl}
                     />
                     <div className="relative w-full md:max-w-[588px] h-[311px] flex justify-center">
