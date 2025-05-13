@@ -20,6 +20,7 @@ export const Default: Story = {
             content={mockTodo[1].name}
             isDone={mockTodo[1].isCompleted}
             idx={mockTodo[1].id}
+            setTodos={}
         ></CheckList>
     )
 };

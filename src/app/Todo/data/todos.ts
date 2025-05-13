@@ -6,7 +6,6 @@ export const mockTodo: TodoData[] = [
 ];
 
 export const editMockTodo: EditTodoData = {
-    id: 1,
     isCompleted: false,
     name: '안녕',
     imageUrl: ''
